@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: driver-management
+  redis:
+    host: 192.168.99.100
