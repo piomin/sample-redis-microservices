@@ -10,6 +10,7 @@
 	<modules>
 		<module>driver-management</module>
 		<module>trip-management</module>
+		<module>passenger-management</module>
 	</modules>
 	<packaging>pom</packaging>
 
