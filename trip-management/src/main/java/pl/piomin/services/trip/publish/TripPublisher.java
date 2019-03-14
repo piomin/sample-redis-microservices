@@ -7,16 +7,16 @@ import org.springframework.data.redis.listener.ChannelTopic;
 
 public class TripPublisher {
 
-	RedisTemplate<String, Trip> redisTemplate;
+	RedisTemplate<?, ?> redisTemplate;
 	ChannelTopic topic;
 
-	public TripPublisher(RedisTemplate<String, Trip> redisTemplate, ChannelTopic topic) {
+	public TripPublisher(RedisTemplate<?, ?> redisTemplate, ChannelTopic topic) {
 		this.redisTemplate = redisTemplate;
 		this.topic = topic;
 	}
 
-	public void publish(String message) {
-		redisTemplate.convertAndSend(topic.getTopic(), message);
+	public void publish(Trip trip) {
+		redisTemplate.convertAndSend(topic.getTopic(), trip);
 	}
 
 }
