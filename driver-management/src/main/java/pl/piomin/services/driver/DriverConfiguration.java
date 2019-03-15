@@ -1,5 +1,6 @@
 package pl.piomin.services.driver;
 
+import org.springframework.beans.factory.annotation.Value;
 import pl.piomin.services.driver.subscribe.DriverSubscriber;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @EnableRedisRepositories
 public class DriverConfiguration {
+
+	@Value("${sample.topic.name}")
+	String topicName;
 
 	@Autowired
 	RedisConnectionFactory redisConnectionFactory;
@@ -33,7 +37,7 @@ public class DriverConfiguration {
 
 	@Bean
 	ChannelTopic topic() {
-		return new ChannelTopic("trips");
+		return new ChannelTopic(topicName);
 	}
 
 }

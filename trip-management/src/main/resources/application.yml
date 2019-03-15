@@ -3,3 +3,6 @@ spring:
     name: trip-management
   redis:
     host: 192.168.99.100
+sample:
+  topic:
+    name: trips

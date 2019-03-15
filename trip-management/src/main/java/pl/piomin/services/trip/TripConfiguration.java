@@ -20,13 +20,6 @@ public class TripConfiguration {
 	@Autowired
 	RedisTemplate<?, ?> redisTemplate;
 
-//	@Bean
-//	RedisTemplate<String, Trip> redisTemplate() {
-//		RedisTemplate<String, Trip> redisTemplate = new RedisTemplate<>();
-//		redisTemplate.setConnectionFactory(redisConnectionFactory);
-//		return redisTemplate;
-//	}
-
 	@Bean
 	TripPublisher redisPublisher() {
 		return new TripPublisher(redisTemplate, topic());

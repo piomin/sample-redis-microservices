@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: redis
+server:
+  port: 8888
