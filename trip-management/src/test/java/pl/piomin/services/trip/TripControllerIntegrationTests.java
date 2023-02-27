@@ -3,7 +3,11 @@ package pl.piomin.services.trip;
 import java.util.Date;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import pl.piomin.services.trip.model.Trip;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +17,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@RunWith(SpringRunner.class)
+@Testcontainers
 public class TripControllerIntegrationTests {
+
+	@Container
+	static final GenericContainer redis = new GenericContainer("redis:latest")
+			.withExposedPorts(6379);
+
+//	@DynamicPropertySource
+//	static void redisProperties(DynamicPropertyRegistry registry) {
+//		int port = redis.getFirstMappedPort();
+//		registry.add("spring.redis.port", () -> port);
+//	}
+
+	@BeforeAll
+	static void init() {
+		System.setProperty("spring.redis.port", redis.getFirstMappedPort().toString());
+	}
 
 	@Autowired
 	TestRestTemplate template;
