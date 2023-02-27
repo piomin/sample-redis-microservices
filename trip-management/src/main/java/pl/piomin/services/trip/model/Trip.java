@@ -58,4 +58,15 @@ public class Trip implements Serializable {
 	public void setStatus(TripStatus status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "Trip{" +
+				"id=" + id +
+				", startDate=" + startDate +
+				", driverId=" + driverId +
+				", passengerId=" + passengerId +
+				", status=" + status +
+				'}';
+	}
 }
