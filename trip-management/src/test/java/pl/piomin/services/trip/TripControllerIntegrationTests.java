@@ -1,6 +1,5 @@
 package pl.piomin.services.trip;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +10,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -19,7 +20,6 @@ import pl.piomin.services.trip.model.Trip;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -55,15 +55,9 @@ public class TripControllerIntegrationTests {
 	static final GenericContainer redis = new GenericContainer("redis:latest")
 			.withExposedPorts(6379);
 
-//	@DynamicPropertySource
-//	static void redisProperties(DynamicPropertyRegistry registry) {
-//		int port = redis.getFirstMappedPort();
-//		registry.add("spring.redis.port", () -> port);
-//	}
-
-	@BeforeAll
-	static void init() {
-		System.setProperty("spring.redis.port", redis.getFirstMappedPort().toString());
+	@DynamicPropertySource
+	static void redisProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.data.redis.port", redis::getFirstMappedPort);
 	}
 
 	@Autowired

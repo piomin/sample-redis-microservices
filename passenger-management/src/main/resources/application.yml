@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: passenger-management
+  config:
+    import: "optional:configserver:http://localhost:8888"
