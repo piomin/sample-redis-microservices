@@ -17,24 +17,24 @@ import pl.piomin.services.driver.repository.DriverRepository;
 @Testcontainers
 public class DriverRepositoryIntegrationTests {
 
-	@Container
-	static final GenericContainer redis = new GenericContainer("redis:latest")
-			.withExposedPorts(6379);
+    @Container
+    static final GenericContainer redis = new GenericContainer("redis:latest")
+            .withExposedPorts(6379);
 
-	@DynamicPropertySource
-	static void redisProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.data.redis.port", redis::getFirstMappedPort);
-	}
+    @DynamicPropertySource
+    static void redisProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.redis.port", redis::getFirstMappedPort);
+    }
 
-	@Autowired
-	DriverRepository repository;
+    @Autowired
+    DriverRepository repository;
 
-	@Test
-	public void testAdd() {
-		Driver driver = new Driver();
-		driver.setName("John Smith");
-		driver.setStatus(DriverStatus.WAITING);
-		driver.setLocation(new Point(10, 20));
-		repository.save(driver);
-	}
+    @Test
+    public void testAdd() {
+        Driver driver = new Driver();
+        driver.setName("John Smith");
+        driver.setStatus(DriverStatus.WAITING);
+        driver.setLocation(new Point(10, 20));
+        repository.save(driver);
+    }
 }

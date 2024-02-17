@@ -17,17 +17,17 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableRedisRepositories
 public class TripConfiguration {
 
-	@Autowired
-	RedisTemplate<?, ?> redisTemplate;
+    @Autowired
+    RedisTemplate<?, ?> redisTemplate;
 
-	@Bean
-	TripPublisher redisPublisher() {
-		return new TripPublisher(redisTemplate, topic());
-	}
+    @Bean
+    TripPublisher redisPublisher() {
+        return new TripPublisher(redisTemplate, topic());
+    }
 
-	@Bean
-	ChannelTopic topic() {
-		return new ChannelTopic("trips");
-	}
+    @Bean
+    ChannelTopic topic() {
+        return new ChannelTopic("trips");
+    }
 
 }

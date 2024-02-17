@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/passengers")
 public class PassengerController {
 
-	@Autowired
-	PassengerRepository repository;
+    @Autowired
+    PassengerRepository repository;
 
-	@PostMapping
-	public Passenger add(Passenger passenger) {
-		return repository.save(passenger);
-	}
+    @PostMapping
+    public Passenger add(Passenger passenger) {
+        return repository.save(passenger);
+    }
 
-	@GetMapping("/{id}")
-	public Passenger findById(@PathVariable("id") Long id) {
-		Optional<Passenger> optPassenger = repository.findById(id);
-		if (optPassenger.isPresent()) {
-			return optPassenger.get();
-		} else {
-			return null;
-		}
-	}
+    @GetMapping("/{id}")
+    public Passenger findById(@PathVariable("id") Long id) {
+        Optional<Passenger> optPassenger = repository.findById(id);
+        if (optPassenger.isPresent()) {
+            return optPassenger.get();
+        } else {
+            return null;
+        }
+    }
 
-	@GetMapping
-	public List<Passenger> findAll() {
-		return (List<Passenger>) repository.findAll();
-	}
+    @GetMapping
+    public List<Passenger> findAll() {
+        return (List<Passenger>) repository.findAll();
+    }
 
 }
