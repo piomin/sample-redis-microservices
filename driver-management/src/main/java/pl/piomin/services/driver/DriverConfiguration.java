@@ -16,28 +16,28 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableRedisRepositories
 public class DriverConfiguration {
 
-	@Value("${sample.topic.name}")
-	String topicName;
+    @Value("${sample.topic.name}")
+    String topicName;
 
-	@Autowired
-	RedisConnectionFactory redisConnectionFactory;
+    @Autowired
+    RedisConnectionFactory redisConnectionFactory;
 
-	@Bean
-	RedisMessageListenerContainer container() {
-		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-		container.addMessageListener(messageListener(), topic());
-		container.setConnectionFactory(redisConnectionFactory);
-		return container;
-	}
+    @Bean
+    RedisMessageListenerContainer container() {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.addMessageListener(messageListener(), topic());
+        container.setConnectionFactory(redisConnectionFactory);
+        return container;
+    }
 
-	@Bean
-	MessageListenerAdapter messageListener() {
-		return new MessageListenerAdapter(new DriverSubscriber());
-	}
+    @Bean
+    MessageListenerAdapter messageListener() {
+        return new MessageListenerAdapter(new DriverSubscriber());
+    }
 
-	@Bean
-	ChannelTopic topic() {
-		return new ChannelTopic(topicName);
-	}
+    @Bean
+    ChannelTopic topic() {
+        return new ChannelTopic(topicName);
+    }
 
 }

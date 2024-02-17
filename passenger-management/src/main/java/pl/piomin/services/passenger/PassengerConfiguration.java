@@ -15,25 +15,25 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableRedisRepositories
 public class PassengerConfiguration {
 
-	@Autowired
-	RedisConnectionFactory redisConnectionFactory;
+    @Autowired
+    RedisConnectionFactory redisConnectionFactory;
 
-	@Bean
-	RedisMessageListenerContainer container() {
-		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-		container.addMessageListener(messageListener(), topic());
-		container.setConnectionFactory(redisConnectionFactory);
-		return container;
-	}
+    @Bean
+    RedisMessageListenerContainer container() {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.addMessageListener(messageListener(), topic());
+        container.setConnectionFactory(redisConnectionFactory);
+        return container;
+    }
 
-	@Bean
-	MessageListenerAdapter messageListener() {
-		return new MessageListenerAdapter(new PassengerSubscriber());
-	}
+    @Bean
+    MessageListenerAdapter messageListener() {
+        return new MessageListenerAdapter(new PassengerSubscriber());
+    }
 
-	@Bean
-	ChannelTopic topic() {
-		return new ChannelTopic("trips");
-	}
+    @Bean
+    ChannelTopic topic() {
+        return new ChannelTopic("trips");
+    }
 
 }

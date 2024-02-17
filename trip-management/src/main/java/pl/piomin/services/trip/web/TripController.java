@@ -20,36 +20,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/trips")
 public class TripController {
 
-	@Autowired
-	TripPublisher publisher;
-	@Autowired
-	TripRepository repository;
+    @Autowired
+    TripPublisher publisher;
+    @Autowired
+    TripRepository repository;
 
-	@PostMapping
-	public Trip create(@RequestBody Trip trip) {
-		trip = repository.save(trip);
-		try {
-			publisher.publish(trip);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return trip;
-	}
+    @PostMapping
+    public Trip create(@RequestBody Trip trip) {
+        trip = repository.save(trip);
+        try {
+            publisher.publish(trip);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return trip;
+    }
 
 
-	@GetMapping("/{id}")
-	public Trip findById(@PathVariable("id") Long id) {
-		Optional<Trip> optTrip = repository.findById(id);
-		if (optTrip.isPresent()) {
-			return optTrip.get();
-		} else {
-			return null;
-		}
-	}
+    @GetMapping("/{id}")
+    public Trip findById(@PathVariable("id") Long id) {
+        Optional<Trip> optTrip = repository.findById(id);
+        if (optTrip.isPresent()) {
+            return optTrip.get();
+        } else {
+            return null;
+        }
+    }
 
-	@GetMapping
-	public List<Trip> findAll() {
-		return (List<Trip>) repository.findAll();
-	}
+    @GetMapping
+    public List<Trip> findAll() {
+        return (List<Trip>) repository.findAll();
+    }
 
 }

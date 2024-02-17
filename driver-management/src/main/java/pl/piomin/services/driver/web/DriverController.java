@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/drivers")
 public class DriverController {
 
-	@Autowired
-	DriverRepository repository;
+    @Autowired
+    DriverRepository repository;
 
-	@PostMapping
-	public Driver add(Driver driver) {
-		return repository.save(driver);
-	}
+    @PostMapping
+    public Driver add(Driver driver) {
+        return repository.save(driver);
+    }
 
-	@GetMapping("/{id}")
-	public Driver findById(@PathVariable("id") Long id) {
-		Optional<Driver> optDriver = repository.findById(id);
-		if (optDriver.isPresent()) {
-			return optDriver.get();
-		} else {
-			return null;
-		}
-	}
+    @GetMapping("/{id}")
+    public Driver findById(@PathVariable("id") Long id) {
+        Optional<Driver> optDriver = repository.findById(id);
+        if (optDriver.isPresent()) {
+            return optDriver.get();
+        } else {
+            return null;
+        }
+    }
 
-	@GetMapping
-	public List<Driver> findAll() {
-		return (List<Driver>) repository.findAll();
-	}
+    @GetMapping
+    public List<Driver> findAll() {
+        return (List<Driver>) repository.findAll();
+    }
 
 }

@@ -18,24 +18,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class PassengerSubscriber implements MessageListener {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(PassengerSubscriber.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PassengerSubscriber.class);
 
-	@Autowired
-	PassengerRepository repository;
-	ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    PassengerRepository repository;
+    ObjectMapper mapper = new ObjectMapper();
 
-	@Override
-	public void onMessage(Message message, byte[] bytes) {
-		try {
-			Trip trip = mapper.readValue(message.getBody(), Trip.class);
-			LOGGER.info("Message received: {}", trip.toString());
-			Optional<Passenger> optPassenger = repository.findById(trip.getDriverId());
-			if (optPassenger.isPresent()) {
-				repository.save(optPassenger.get());
-			}
-		} catch (IOException e) {
-			LOGGER.error("Error reading message", e);
-		}
-	}
+    @Override
+    public void onMessage(Message message, byte[] bytes) {
+        try {
+            Trip trip = mapper.readValue(message.getBody(), Trip.class);
+            LOGGER.info("Message received: {}", trip.toString());
+            Optional<Passenger> optPassenger = repository.findById(trip.getDriverId());
+            if (optPassenger.isPresent()) {
+                repository.save(optPassenger.get());
+            }
+        } catch (IOException e) {
+            LOGGER.error("Error reading message", e);
+        }
+    }
 
 }
