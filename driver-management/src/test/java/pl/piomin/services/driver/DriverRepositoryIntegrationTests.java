@@ -2,10 +2,9 @@ package pl.piomin.services.driver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
+import org.springframework.boot.data.redis.test.autoconfigure.DataRedisTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.data.geo.Point;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -18,13 +17,9 @@ import pl.piomin.services.driver.repository.DriverRepository;
 public class DriverRepositoryIntegrationTests {
 
     @Container
+    @ServiceConnection
     static final GenericContainer redis = new GenericContainer("redis:latest")
             .withExposedPorts(6379);
-
-    @DynamicPropertySource
-    static void redisProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.redis.port", redis::getFirstMappedPort);
-    }
 
     @Autowired
     DriverRepository repository;
